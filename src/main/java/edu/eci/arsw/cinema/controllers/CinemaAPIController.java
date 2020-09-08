@@ -50,7 +50,7 @@ public class CinemaAPIController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }catch (Exception e){
             Logger.getLogger(CinemaAPIController.class.getName()).log(Level.SEVERE, null, e);
-            return new ResponseEntity<>("Error consultando cinema", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -76,7 +76,7 @@ public class CinemaAPIController {
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.NOT_FOUND);
         }catch (Exception e){
             Logger.getLogger(CinemaAPIController.class.getName()).log(Level.SEVERE, null, e);
-            return new ResponseEntity<>("Error consultando función", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

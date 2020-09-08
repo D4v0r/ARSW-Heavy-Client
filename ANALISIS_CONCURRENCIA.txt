@@ -1,0 +1,15 @@
+Qué condiciones de carrera se podrían presentar?
+Se pueden presentar condiciones de carrera de tipo read-write-modify realizando operaciones CRUD en las funciones de los cinemas.
+Tambien se pueden presentar condiciones de carrera tipo check-then-act a la hora de comprar las entradas, con la reserva de las sillas.
+
+Cuales son las respectivas regiones críticas?
+Los métodos que en que se manipulan el estado de las funciones de los cinemas, por ende debemos garantizar que las operaciones que se realicen en los cinemas sean thread-safe.
+- addCinemaFunction.
+- updateCinemaFunction.
+- buyTicket.
+
+El HashMap que colecciona los cinemas.
+El ArrayList que colecciona los acientos.
+
+Es necesario hacer que el HashMap sea thread-safe en ese caso se puede usar ConcurrentHashMap como estructura átomica y así lograr que el estado de
+los objetos que se manipulan se mantengan consistentes.
