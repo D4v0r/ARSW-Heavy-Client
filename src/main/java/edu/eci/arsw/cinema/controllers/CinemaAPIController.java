@@ -10,16 +10,16 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import edu.eci.arsw.cinema.model.CinemaFunction;
 import edu.eci.arsw.cinema.persistence.CinemaPersistenceException;
+import edu.eci.arsw.cinema.services.CinemaException;
 import edu.eci.arsw.cinema.services.CinemaServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 /**
  *
  * @author cristian
@@ -32,19 +32,22 @@ public class CinemaAPIController {
     CinemaServices cinemaServices;
 
     @RequestMapping( value = "/cinemas", method = RequestMethod.GET)
-    public ResponseEntity<?> manejadorGetCinemas(){
+    public ResponseEntity<?> getCinemas(){
         try {
-            return new ResponseEntity<>(cinemaServices.getAllCinemas(), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(cinemaServices.getAllCinemas(), HttpStatus.OK);
         } catch (Exception e){
             Logger.getLogger(CinemaAPIController.class.getName()).log(Level.SEVERE, null, e);
-            return new ResponseEntity<>("Error consultando los cinemas", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @RequestMapping(value = "/cinemas/{name}", method = RequestMethod.GET)
     public ResponseEntity<?> getCinema(@PathVariable String name){
         try{
-            return new ResponseEntity<>(cinemaServices.getCinemaByName(name), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(cinemaServices.getCinemaByName(name), HttpStatus.OK);
+        } catch (CinemaException e){
+            Logger.getLogger(CinemaAPIController.class.getName()).log(Level.SEVERE, null, e);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }catch (Exception e){
             Logger.getLogger(CinemaAPIController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>("Error consultando cinema", HttpStatus.NOT_FOUND);
@@ -54,22 +57,54 @@ public class CinemaAPIController {
     @RequestMapping(value = "/cinemas/{name}/{date}", method = RequestMethod.GET)
     public ResponseEntity<?> getCinemaFunctionsByDate(@PathVariable String name, @PathVariable String date){
         try{
-            return new ResponseEntity<>(cinemaServices.getFunctionsbyCinemaAndDate(name, date), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(cinemaServices.getFunctionsbyCinemaAndDate(name, date), HttpStatus.OK);
+        }catch (CinemaException e){
+            Logger.getLogger(CinemaAPIController.class.getName()).log(Level.SEVERE, null, e);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }catch (Exception e){
             Logger.getLogger(CinemaAPIController.class.getName()).log(Level.SEVERE, null, e);
-            return new ResponseEntity<>("Error consultando funciones", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @RequestMapping(value = "/cinemas/{name}/{date}/{moviename}", method = RequestMethod.GET)
     public ResponseEntity<?> getCinemaFunction(@PathVariable String name, @PathVariable String date, @PathVariable String moviename) {
         try {
-            return new ResponseEntity<>(cinemaServices.getFunction(name, date, moviename), HttpStatus.ACCEPTED);
-        } catch (Exception e) {
+            return new ResponseEntity<>(cinemaServices.getFunction(name, date, moviename), HttpStatus.OK);
+        } catch (CinemaException e) {
             Logger.getLogger(CinemaAPIController.class.getName()).log(Level.SEVERE, null, e);
-            return new ResponseEntity<>("Error consultando función", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            Logger.getLogger(CinemaAPIController.class.getName()).log(Level.SEVERE, null, e);
+            return new ResponseEntity<>("Error consultando función", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    
+    @RequestMapping(value = "/cinemas/{name}", method = RequestMethod.POST)
+    public ResponseEntity<?> addCinemaFunction(@PathVariable String name, @RequestBody CinemaFunction function){
+        try{
+            cinemaServices.addCinemaFunction(name, function);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }catch (CinemaException e){
+            Logger.getLogger(CinemaAPIController.class.getName()).log(Level.SEVERE, null, e);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            Logger.getLogger(CinemaAPIController.class.getName()).log(Level.SEVERE, null, e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value = "/cinemas/{name}", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateCinemaFunction(@PathVariable String name, @RequestBody CinemaFunction function){
+        try{
+            cinemaServices.updateCinemaFunction(name, function);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (CinemaException e){
+            Logger.getLogger(CinemaAPIController.class.getName()).log(Level.SEVERE, null, e);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            Logger.getLogger(CinemaAPIController.class.getName()).log(Level.SEVERE, null, e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

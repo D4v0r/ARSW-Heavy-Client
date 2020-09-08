@@ -9,7 +9,6 @@ import edu.eci.arsw.cinema.filter.CinemaFilter;
 import edu.eci.arsw.cinema.filter.CinemaFilterException;
 import edu.eci.arsw.cinema.model.Cinema;
 import edu.eci.arsw.cinema.model.CinemaFunction;
-import edu.eci.arsw.cinema.persistence.CinemaException;
 import edu.eci.arsw.cinema.persistence.CinemaPersistenceException;
 import edu.eci.arsw.cinema.persistence.CinemaPersitence;
 import java.util.List;
@@ -72,13 +71,9 @@ public class CinemaServices {
      * @param name the name
      * @return the cinema by name
      */
-    public Cinema getCinemaByName(String name) {
-        try {
-            return cps.getCinema(name);
-        } catch (CinemaPersistenceException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public Cinema getCinemaByName(String name) throws CinemaException{
+        if(cps.getCinema(name) == null) throw  new CinemaException("Este cinema no existe");
+        return  cps.getCinema(name);
     }
 
 
@@ -106,7 +101,8 @@ public class CinemaServices {
      * @param date   the date
      * @return the functionsby cinema and date
      */
-    public List<CinemaFunction> getFunctionsbyCinemaAndDate(String cinema, String date) {
+    public List<CinemaFunction> getFunctionsbyCinemaAndDate(String cinema, String date) throws CinemaException{
+        if(cps.getFunctionsbyCinemaAndDate(cinema, date).isEmpty()) throw new CinemaException("Este cinema no tiene funciones programadas para la fecha indicada.");
         return cps.getFunctionsbyCinemaAndDate(cinema,date);
     }
 
@@ -118,7 +114,7 @@ public class CinemaServices {
      * @param property the property
      * @return the list
      */
-    public List<CinemaFunction> getFunctionsByFilter(String cinema, String date, String property){
+    public List<CinemaFunction> getFunctionsByFilter(String cinema, String date, String property) throws CinemaException {
         List<CinemaFunction> functions = getFunctionsbyCinemaAndDate(cinema, date);
 
         try{
@@ -129,8 +125,27 @@ public class CinemaServices {
         return functions;
     }
 
-    public CinemaFunction getFunction(String cinema, String date, String movie){
-        return cps.getFunction(cinema, date, movie);
+    public CinemaFunction getFunction(String cinema, String date, String movie) throws CinemaException{
+        try {
+            return cps.getFunction(cinema, date, movie);
+        } catch (CinemaPersistenceException e){
+            throw new CinemaException(e.getMessage());
+        }
     }
 
+    public void addCinemaFunction(String cinema, CinemaFunction function) throws CinemaException{
+        try{
+            cps.addCinemaFunction(cinema, function);
+        }catch (CinemaPersistenceException e){
+            throw new CinemaException(e.getMessage());
+        }
+    }
+
+    public void updateCinemaFunction(String cinema, CinemaFunction function) throws  CinemaException{
+        try{
+            cps.updateCinemaFunction(cinema, function);
+        }catch (CinemaPersistenceException e){
+            throw new CinemaException(e.getMessage());
+        }
+    }
 }

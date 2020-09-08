@@ -7,6 +7,8 @@ package edu.eci.arsw.cinema.persistence;
 
 import edu.eci.arsw.cinema.model.Cinema;
 import edu.eci.arsw.cinema.model.CinemaFunction;
+import edu.eci.arsw.cinema.services.CinemaException;
+
 import java.util.List;
 import java.util.Set;
 
@@ -36,7 +38,7 @@ public interface CinemaPersitence {
      */
     public List<CinemaFunction> getFunctionsbyCinemaAndDate(String cinema, String date);
 
-    public CinemaFunction getFunction(String cinema, String date, String movie);
+    public CinemaFunction getFunction(String cinema, String date, String movie) throws CinemaPersistenceException;
 
     /**
      * Save cinema.
@@ -50,10 +52,9 @@ public interface CinemaPersitence {
      * Gets cinema.
      *
      * @param name the name
-     * @return the cinema
-     * @throws CinemaPersistenceException the cinema persistence exception
+     * @return the cinema* @throws CinemaPersistenceException the cinema persistence exception
      */
-    public Cinema getCinema(String name) throws CinemaPersistenceException;
+    public Cinema getCinema(String name);
 
     /**
      * Gets all cinemas.
@@ -63,6 +64,8 @@ public interface CinemaPersitence {
      */
     public Set<Cinema> getAllCinemas() throws  CinemaPersistenceException;
 
+    public void addCinemaFunction(String cinema, CinemaFunction function) throws  CinemaPersistenceException;
 
+    public void updateCinemaFunction(String cinema, CinemaFunction function) throws  CinemaPersistenceException;
 
 }

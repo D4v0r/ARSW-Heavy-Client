@@ -8,7 +8,7 @@ package edu.eci.arsw.cinema.persistence.impl;
 import edu.eci.arsw.cinema.model.Cinema;
 import edu.eci.arsw.cinema.model.CinemaFunction;
 import edu.eci.arsw.cinema.model.Movie;
-import edu.eci.arsw.cinema.persistence.CinemaException;
+import edu.eci.arsw.cinema.services.CinemaException;
 import edu.eci.arsw.cinema.persistence.CinemaPersistenceException;
 import edu.eci.arsw.cinema.persistence.CinemaPersitence;
 import org.springframework.stereotype.Component;
@@ -77,11 +77,15 @@ public class InMemoryCinemaPersistence implements CinemaPersitence{
     }
 
     @Override
-    public CinemaFunction getFunction(String cinema, String date, String movie) {
-        return cinemas.get(cinema).getFunctions().stream()
-                                                                                .filter(cinemaFunction -> cinemaFunction.getDate().equals(date) && cinemaFunction.getMovie().getName().equals(movie))
-                                                                                .findAny()
-                                                                                .get();
+    public CinemaFunction getFunction(String cinema, String date, String movie) throws CinemaPersistenceException{
+        try {
+            return cinemas.get(cinema).getFunctions().stream()
+                    .filter(cinemaFunction -> cinemaFunction.getDate().equals(date) && cinemaFunction.getMovie().getName().equals(movie))
+                    .findAny()
+                    .get();
+        } catch (NoSuchElementException e){
+            throw new CinemaPersistenceException(CinemaPersistenceException.NO_FOUND_CINEMA_FUNCTION);
+        }
     }
 
     @Override
@@ -95,7 +99,7 @@ public class InMemoryCinemaPersistence implements CinemaPersitence{
     }
 
     @Override
-    public Cinema getCinema(String name) throws CinemaPersistenceException {
+    public Cinema getCinema(String name) {
         return cinemas.get(name);
     }
 
@@ -104,5 +108,35 @@ public class InMemoryCinemaPersistence implements CinemaPersitence{
         return new HashSet<>(cinemas.values());
     }
 
+    @Override
+    public void addCinemaFunction(String cinema, CinemaFunction function) throws CinemaPersistenceException {
+        try {
+            getFunction(cinema, function.getDate(), function.getMovie().getName());
+        }catch (CinemaPersistenceException e){
+            if(e.getMessage().equals(CinemaPersistenceException.NO_FOUND_CINEMA_FUNCTION)) getCinema(cinema).getFunctions().add(function);
+        }
+        throw new CinemaPersistenceException(CinemaPersistenceException.CINEMA_FUNCTION_ALREADY_EXISTS);
+    }
+
+    @Override
+    public void updateCinemaFunction(String cinema, CinemaFunction function) throws CinemaPersistenceException {
+        try{
+            if(getFunction(cinema, function.getDate(), function.getMovie().getName()) == null){
+                addCinemaFunction(cinema, function);
+            } else{
+                getCinema(cinema).getFunctions().replaceAll( x -> {
+                    final CinemaFunction y;
+                    if(x.toString().equals(function.toString())){
+                        y = function;
+                    } else {
+                        y = x;
+                    }
+                    return y;
+                });
+            }
+        }catch (Exception e){
+            throw new CinemaPersistenceException("Error actulizando función");
+        }
+    }
 
 }

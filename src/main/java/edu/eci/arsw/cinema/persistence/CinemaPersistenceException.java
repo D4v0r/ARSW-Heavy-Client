@@ -11,6 +11,7 @@ package edu.eci.arsw.cinema.persistence;
  */
 public class CinemaPersistenceException extends Exception {
     public static final String NO_FOUND_CINEMA_FUNCTION = "La función actual no existe.";
+    public static final String CINEMA_FUNCTION_ALREADY_EXISTS = "La función ya existe.";
 
     public CinemaPersistenceException(String message) {
         super(message);
