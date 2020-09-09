@@ -126,19 +126,15 @@ public class CinemaServices {
     }
 
     public CinemaFunction getFunction(String cinema, String date, String movie) throws CinemaException{
-        try {
+            if(cps.getFunction(cinema, date, movie) == null) throw new CinemaException(CinemaPersistenceException.NO_FOUND_CINEMA_FUNCTION);
             return cps.getFunction(cinema, date, movie);
-        } catch (CinemaPersistenceException e){
-            throw new CinemaException(e.getMessage());
-        }
     }
 
     public void addCinemaFunction(String cinema, CinemaFunction function) throws CinemaException{
         try{
             cps.addCinemaFunction(cinema, function);
         }catch (CinemaPersistenceException e){
-            throw new CinemaException(e.getMessage());
-        }
+            throw new CinemaException(e.getMessage()); }
     }
 
     public void updateCinemaFunction(String cinema, CinemaFunction function) throws  CinemaException{

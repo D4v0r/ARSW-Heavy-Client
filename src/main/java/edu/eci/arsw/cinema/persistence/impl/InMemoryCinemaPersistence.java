@@ -78,14 +78,14 @@ public class InMemoryCinemaPersistence implements CinemaPersitence{
     }
 
     @Override
-    public CinemaFunction getFunction(String cinema, String date, String movie) throws CinemaPersistenceException{
+    public CinemaFunction getFunction(String cinema, String date, String movie){
         try {
             return cinemas.get(cinema).getFunctions().stream()
                     .filter(cinemaFunction -> cinemaFunction.getDate().equals(date) && cinemaFunction.getMovie().getName().equals(movie))
                     .findAny()
                     .get();
         } catch (NoSuchElementException e){
-            throw new CinemaPersistenceException(CinemaPersistenceException.NO_FOUND_CINEMA_FUNCTION);
+           return null;
         }
     }
 
@@ -111,12 +111,8 @@ public class InMemoryCinemaPersistence implements CinemaPersitence{
 
     @Override
     public void addCinemaFunction(String cinema, CinemaFunction function) throws CinemaPersistenceException {
-        try {
-            getFunction(cinema, function.getDate(), function.getMovie().getName());
-        }catch (CinemaPersistenceException e){
-            if(e.getMessage().equals(CinemaPersistenceException.NO_FOUND_CINEMA_FUNCTION)) getCinema(cinema).getFunctions().add(function);
-        }
-        throw new CinemaPersistenceException(CinemaPersistenceException.CINEMA_FUNCTION_ALREADY_EXISTS);
+        if(getFunction(cinema, function.getDate(), function.getMovie().getName()) != null ) throw new CinemaPersistenceException(CinemaPersistenceException.CINEMA_FUNCTION_ALREADY_EXISTS);
+        getCinema(cinema).getFunctions().add(function);
     }
 
     @Override

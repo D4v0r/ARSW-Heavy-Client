@@ -38,7 +38,7 @@ public interface CinemaPersitence {
      */
     public List<CinemaFunction> getFunctionsbyCinemaAndDate(String cinema, String date);
 
-    public CinemaFunction getFunction(String cinema, String date, String movie) throws CinemaPersistenceException;
+    public CinemaFunction getFunction(String cinema, String date, String movie);
 
     /**
      * Save cinema.
