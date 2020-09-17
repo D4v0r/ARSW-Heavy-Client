@@ -13,7 +13,7 @@
             box-sizing: border-box;
         }
         body {
-            font-family: Arial;
+            font-family: Arial,serif;
             margin: 0;
         }
 
@@ -33,6 +33,7 @@
             flex: 60%;
             background-color: white;
             padding: 20px;
+
         }
 
         .side {
@@ -40,10 +41,61 @@
             background-color: #f1f1f1;
             padding: 20px;
         }
+
         .functions{
             border:  1px solid black;
             border-collapse: collapse;
         }
+
+        .form-inline {
+            display: flex;
+            flex-flow: row wrap;
+            align-items: center;
+        }
+        
+        .form-inline label {
+            margin: 5px 10px 5px 0;
+        }
+
+        /* Style the input fields */
+        .form-inline input {
+            vertical-align: middle;
+            margin: 5px 10px 5px 0;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+
+        /* Style the submit button */
+        .form-inline button {
+            padding: 10px 20px;
+            background-color: deepskyblue;
+            border: 1px solid #ddd;
+            color: white;
+        }
+
+        .form-inline button:hover {
+            background-color: greenyellow;
+        }
+
+        /* Add responsiveness - display the form controls vertically instead of horizontally on screens that are less than 800px wide */
+        @media (max-width: 800px) {
+            .form-inline input {
+                margin: 10px 0;
+            }
+
+            .form-inline {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+
+        .cinema-line{
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-around;
+        }
+        
     </style>
 </head>
 <body>
@@ -55,7 +107,16 @@
 <! -- Content -->
 <div class="row">
     <div class="main">
-        <h2>Cinema</h2>
+        <div class="cinema-line">
+            <h2>Cinema</h2>
+            <form class="form-inline" >
+                <label for="name">Name:</label>
+                <input type="text" id="name" placeholder="Enter Name" name="name">
+                <label for="date">Date:</label>
+                <input type="date" id="date" placeholder="Enter Date" name="date">
+                <button type="submit" style="border-radius: 12px" class="button">Get Functions</button>
+            </form>
+        </div>
         <table class="table">
             <thead class="thead-dark">
                 <tr>
