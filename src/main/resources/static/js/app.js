@@ -23,8 +23,7 @@ app = ( () => {
                     })
                 );
                $("#functionsTable").empty();
-                 cinemaFunctions.forEach(o => {
-                     const {name, genre, hour} = o;
+                 cinemaFunctions.forEach(({name, genre, hour}) => {
                      $("#functionsTable").append(`<tr><td>${name}</td><td>${genre}</td><td>${hour}</td><td>open</td>></tr>`);
                     });
             })
