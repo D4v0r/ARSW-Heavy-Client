@@ -43,7 +43,7 @@ mvn spring-boot:run
 
 ## Ejercicios
 
-
+![](https://media.discordapp.net/attachments/749330138407370856/758257401869893642/unknown.png?width=1290&height=688)
 
 
 ## LICENCIA 
