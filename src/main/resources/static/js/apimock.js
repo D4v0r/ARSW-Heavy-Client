@@ -24,6 +24,8 @@ apimock = (function () {
     }
 
 })();
+
+//console.log(arr);
 /*
 var fun = x => console.log(x.map(({movie:{name: name, genre: genre}, date: date}) => (
     {
