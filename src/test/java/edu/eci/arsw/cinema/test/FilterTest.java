@@ -74,26 +74,26 @@ public class FilterTest {
         Assert.assertNotEquals(functionsResult, functionsExpected);
     }
 
-    @Test
-    public void debeFiltrarPorDisponibilidad() {
-        String functionDate = "2018-12-18 15:30";
-        List<CinemaFunction> functionsResult = new ArrayList<>();
-        List<CinemaFunction> functionsExpected = new ArrayList<>();
-        functionsExpected.add(new CinemaFunction(new Movie("SuperHeroes Movie", "Action"), functionDate));
-        functionsExpected.add(new CinemaFunction(new Movie("The Night", "Horror"), functionDate));
-        try {
-            functionsResult.addAll(filterByAvailability.filterBy(c.getFunctions(), "5"));
-
-
-        } catch (CinemaFilterException e) {
-            fail();
-        }
-        functionsExpected.sort((x,y) -> x.hashCode());
-        functionsResult.sort((x,y) -> x.hashCode());
-        for (int i = 0; i < functionsExpected.size(); i++) {
-            Assert.assertEquals(functionsExpected.get(i).toString(), functionsResult.get(i).toString());
-        }
-    }
+//    @Test
+//    public void debeFiltrarPorDisponibilidad() {
+//        String functionDate = "2018-12-18 15:30";
+//        List<CinemaFunction> functionsResult = new ArrayList<>();
+//        List<CinemaFunction> functionsExpected = new ArrayList<>();
+//        functionsExpected.add(new CinemaFunction(new Movie("SuperHeroes Movie", "Action"), functionDate));
+//        functionsExpected.add(new CinemaFunction(new Movie("The Night", "Horror"), functionDate));
+//        try {
+//            functionsResult.addAll(filterByAvailability.filterBy(c.getFunctions(), "5"));
+//
+//
+//        } catch (CinemaFilterException e) {
+//            fail();
+//        }
+//        functionsExpected.sort((x,y) -> x.hashCode());
+//        functionsResult.sort((x,y) -> x.hashCode());
+//        for (int i = 0; i < functionsExpected.size(); i++) {
+//            Assert.assertEquals(functionsExpected.get(i).toString(), functionsResult.get(i).toString());
+//        }
+//    }
 
     @Test
     public void noDebeFiltrarPorDisponibilidad() {
