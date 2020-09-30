@@ -34,7 +34,7 @@ app = ( () => {
             <br/>
             <h2>Administrator mode</h2>
             <br/>
-            <div id="admin-form">
+            <div id="admin-form" class="container">
                 
             <br/>
             </div>
