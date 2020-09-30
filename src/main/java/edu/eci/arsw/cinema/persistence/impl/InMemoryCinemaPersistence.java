@@ -136,4 +136,17 @@ public class InMemoryCinemaPersistence implements CinemaPersitence{
         }
     }
 
+    @Override
+    public void deleteCinemaFunction(String cinema, String date, String movie) throws CinemaPersistenceException {
+        try {
+            CinemaFunction function = getFunction(cinema, date, movie);
+            System.out.println(function);
+            cinemas.get(cinema).getFunctions().remove(function);
+        } catch (Exception e){
+            e.printStackTrace();
+            throw new CinemaPersistenceException("Error eliminando función");
+
+        }
+    }
+
 }

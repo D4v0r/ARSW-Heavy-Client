@@ -107,4 +107,18 @@ public class CinemaAPIController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @RequestMapping(value = "/cinemas/{name}/{date}/{movie}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteCinemaFunction(@PathVariable String name, @PathVariable String date, @PathVariable String movie){
+        try{
+            cinemaServices.deleteFunction(name, date, movie);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (CinemaException e){
+            Logger.getLogger(CinemaAPIController.class.getName()).log(Level.SEVERE, null, e);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            Logger.getLogger(CinemaAPIController.class.getName()).log(Level.SEVERE, null, e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

@@ -144,4 +144,12 @@ public class CinemaServices {
             throw new CinemaException(e.getMessage());
         }
     }
+
+    public void deleteFunction(String cinema, String date, String movie) throws  CinemaException{
+        try{
+            cps.deleteCinemaFunction(cinema, date, movie);
+        } catch (CinemaPersistenceException e){
+            throw new CinemaException(e.getMessage());
+        }
+    }
 }

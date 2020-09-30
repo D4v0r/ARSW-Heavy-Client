@@ -78,7 +78,16 @@ public class InMemoryPersistenceTest {
         catch (CinemaPersistenceException ex){
             
         }
-                
-        
+    }
+
+    @Test
+    public void deberiaEliminarFuncion() throws CinemaPersistenceException {
+        String functionDate = "2018-12-18 15:30";
+        InMemoryCinemaPersistence ipct=new InMemoryCinemaPersistence();
+
+        ipct.deleteCinemaFunction("cinemaX", functionDate, "The Night");
+
+        assertEquals(1, ipct.getFunctionsbyCinemaAndDate("cinemaX", "2018-12-18").size());
+        assertEquals("SuperHeroes Movie", ipct.getFunctionsbyCinemaAndDate("cinemaX", "2018-12-18").get(0).getMovie().getName());
     }
 }

@@ -32,6 +32,7 @@ body {
     align-content: center;
     align-items:center;
     justify-content: center;
+    flex-direction: column;
 }
 
 .functions{
@@ -52,10 +53,11 @@ body {
 /* Style the input fields */
 .form-inline input {
     vertical-align: middle;
-    margin: 5px 10px 5px 0;
+    margin: 5px 5px 5px 0;
     padding: 10px;
     background-color: #fff;
     border: 1px solid #ddd;
+    width: 25%;
 }
 
 /* Style the submit button */
@@ -90,4 +92,20 @@ body {
 
 #seats-canvas{
     border: 1px solid #000000;
+}
+
+#availability-section{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.administrator-section{
+    display: flex;
+    border:1px solid black;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
 }

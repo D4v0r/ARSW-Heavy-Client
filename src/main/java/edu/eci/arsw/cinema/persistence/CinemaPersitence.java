@@ -68,4 +68,6 @@ public interface CinemaPersitence {
 
     public void updateCinemaFunction(String cinema, CinemaFunction function) throws  CinemaPersistenceException;
 
+    public void deleteCinemaFunction(String cinema, String date, String movie) throws CinemaPersistenceException;
+
 }

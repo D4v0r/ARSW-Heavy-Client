@@ -127,4 +127,5 @@ public class FilterTest {
             Assert.assertEquals(CinemaFilterException.FILTER_NUMERIC_EXPECTED, e.getMessage());
         }
     }
+
 }

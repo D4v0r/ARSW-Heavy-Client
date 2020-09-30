@@ -29,7 +29,7 @@
                 <label for="date">Date:</label>
                 <input type="date" id="date" placeholder="Enter Date" name="date">
                 <button type="button" style="border-radius: 12px" class="button"
-                        onClick="app.updateFunctions($('#name').val(), $('#date').val()); app.setCinemaName($('#name').val()); app.setDate($('#date').val())">Get Functions</button>
+                        onClick="app.updateFunctions($('#name').val(), $('#date').val())">Get Functions</button>
             </form>
         </div>
             <br/>
@@ -51,11 +51,14 @@
             </tbody>
         </table>
     </div>
-    <div class="side">
-        <h2 id="availability"></h2>
-        <canvas id="myCanvas" width="500" height="600" style="border: 1px solid #000000">
+    <div class="side flex-container">
+        <div id="availability-section">
 
-        </canvas>
+        </div>
+        <br/><br/>
+        <div id="administrator-section">
+
+        </div>
     </div>
 </div>
 </body>
