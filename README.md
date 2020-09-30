@@ -51,5 +51,10 @@ mvn spring-boot:run
 ![](https://cdn.discordapp.com/attachments/749330138407370856/760762297399771186/unknown.png)
 
 
+- Crear nuevas Funciones
+
+![](https://cdn.discordapp.com/attachments/749330138407370856/760762834438193202/unknown.png)
+
+
 ## LICENCIA 
 Este proyecto está licenciado bajo la GNU General Public License v3.0, para más información ver la [LICENCIA](https://github.com/D4v0r/ARSW-Heavy-Client/blob/master/LICENSE.txt).
