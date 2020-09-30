@@ -46,5 +46,15 @@ mvn spring-boot:run
 ![](https://media.discordapp.net/attachments/749330138407370856/758257401869893642/unknown.png?width=1290&height=688)
 
 
+- Modo administrador
+
+![](https://cdn.discordapp.com/attachments/749330138407370856/760762297399771186/unknown.png)
+
+
+- Crear nuevas Funciones
+
+![](https://cdn.discordapp.com/attachments/749330138407370856/760763674800947241/unknown.png)
+
+
 ## LICENCIA 
 Este proyecto está licenciado bajo la GNU General Public License v3.0, para más información ver la [LICENCIA](https://github.com/D4v0r/ARSW-Heavy-Client/blob/master/LICENSE.txt).
